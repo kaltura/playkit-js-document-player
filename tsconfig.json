@@ -20,6 +20,6 @@
     "experimentalDecorators": true,
     "downlevelIteration": true
   },
-  "include": ["src/**/*.ts", "test/**/*.ts"],
+  "include": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts"],
   "exclude": ["node_modules"]
 }

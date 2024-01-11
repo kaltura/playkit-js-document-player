@@ -4,12 +4,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 
+import { h } from 'preact';
 // @ts-ignore
 import { IEngine, FakeEventTarget, FakeEvent, EventManager, EventType, getLogger, Utils } from '@playkit-js/playkit-js';
-// import {h} from 'preact';
-// import {ui} from '@playkit-js/kaltura-player-js';
 import { Timer } from './timer';
-// import {DocOverlay} from "./components/doc-overlay";
+import { DocOverlay, IvqOverlayProps } from './components/doc-overlay';
 
 const PLAYBACK_RATES = [0.5, 1, 1.5, 2];
 
@@ -25,6 +24,7 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
   private isFirstPlay: boolean;
   private isLoadingStart: boolean;
   private isReloadedOnfullscreen: boolean;
+  private docOverlay: null | Function = null;
 
   constructor(source: any, config: any) {
     super();
@@ -58,12 +58,12 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
 
   private updSourceParams(): void {
     const docAPIParams: any = {
-      ...(this.shouldAddKs() && { ks: this.config.session.ks }),
+      ...(this.shouldAddKs() && { ks: this.config.session.ks })
     };
 
     const docThumbParams: any = {
-      width: this.getPlayerWidth(),
-    }
+      width: this.getPlayerWidth()
+    };
 
     Object.keys(docAPIParams).forEach((parmaName: string) => {
       this.source.url += `/${parmaName}/${docAPIParams[parmaName]}`;
@@ -109,19 +109,22 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
   }
 
   private addUI(): void {
-    // // @ts-ignore
-    // console.log(">> kp", KalturaPlayer)
-    // console.log(">> ui", ui)
-    // console.log(">> this", this)
-    //  // @ts-ignore
-    // ui.UIManager.addComponent({
-    //   label: 'kaltura-ivq-review-screen',
-    //   presets: ['Playback'],
-    //   container: 'GuiArea',
-    //   get: () => {
-    //     return <DocOverlay />;
-    //   }
-    // })
+    const docOverlayProps: IvqOverlayProps = {};
+    const tempURL = 'https://kaltura.com'; // TODO: read previewUrl from hostpage URL
+    if (tempURL) {
+      docOverlayProps.previewUrl = this.source.url;
+    } else if (!this.config.docSourceOptions?.downloadDisabled) {
+      docOverlayProps.downloadUrl = this.source.url;
+    }
+    // @ts-ignore
+    this.docOverlay = KalturaPlayer.getPlayer(this.config.targetId).ui.addComponent({
+      label: 'kaltura-ivq-review-screen',
+      presets: ['Playback'],
+      container: 'GuiArea',
+      get: () => {
+        return <DocOverlay {...docOverlayProps} />;
+      }
+    });
   }
 
   private reloadHigherQualityOnFullscreen(): void {
@@ -314,6 +317,9 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
   }
 
   public reset(): void {
+    if (this.docOverlay) {
+      this.docOverlay();
+    }
     this.eventManager.removeAll();
     this.isFirstPlay = true;
     this.isLoadingStart = false;
