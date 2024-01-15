@@ -114,11 +114,11 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
   }
 
   private addUI(): void {
+    const docPlayerConfig = this.config.externals?.['playkit-doc-player'] || {};
     const docOverlayProps: IvqOverlayProps = {};
-    const tempURL = 'https://kaltura.com'; // TODO: read previewUrl from hostpage URL
-    if (tempURL) {
-      docOverlayProps.onPreview = this.onPreview;
-    } else if (!this.config.docSourceOptions?.downloadDisabled) {
+    if (docPlayerConfig.basePreviewUrl) {
+      docOverlayProps.onPreview = () => this.onPreview(`${docPlayerConfig.basePreviewUrl}${this.source.id}`);
+    } else if (!docPlayerConfig.downloadDisabled) {
       docOverlayProps.onDownload = this.onDownload;
     }
 
@@ -132,9 +132,9 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
     });
   }
 
-  private onPreview() {
-    console.log('>> this.source.url', this.source.url);
-  }
+  private onPreview = (url: string) => {
+    (window as any).open(url, '_blank').focus();
+  };
 
   private onDownload = () => {
     const aElement = document.createElement('a');
