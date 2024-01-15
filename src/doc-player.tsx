@@ -15,6 +15,7 @@ const PLAYBACK_RATES = [0.5, 1, 1.5, 2];
 export class DocPlayer extends FakeEventTarget implements IEngine {
   public static _logger: any = getLogger('Document');
   public static id = 'doc';
+  public static configName = 'playkit-doc-player';
   private eventManager: EventManager;
   private el!: HTMLImageElement;
   private source: any;
@@ -114,7 +115,7 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
   }
 
   private addUI(): void {
-    const docPlayerConfig = this.config.externals?.['playkit-doc-player'] || {};
+    const docPlayerConfig = this.config.externals?.[DocPlayer.configName] || {};
     const docOverlayProps: IvqOverlayProps = {};
     if (docPlayerConfig.basePreviewUrl) {
       docOverlayProps.onPreview = () => this.onPreview(`${docPlayerConfig.basePreviewUrl}${this.source.id}`);
@@ -124,7 +125,7 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
 
     this.docOverlay = this.player.ui.addComponent({
       label: 'kaltura-ivq-review-screen',
-      presets: ['Playback'],
+      presets: ['Doc'],
       container: 'GuiArea',
       get: () => {
         return <DocOverlay {...docOverlayProps} />;
