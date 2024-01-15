@@ -15,10 +15,10 @@ const translates = {
 };
 
 export interface IvqOverlayProps {
-  previewUrl?: string;
+  onPreview?: () => void;
   previewText?: string;
   previewButtonText?: string;
-  downloadUrl?: string;
+  onDownload?: () => void;
   downloadText?: string;
   downloadButtonText?: string;
   contentUnavailableText?: string;
@@ -26,17 +26,17 @@ export interface IvqOverlayProps {
 
 export const DocOverlay = withText(translates)((props: IvqOverlayProps) => {
   const getContent = (): { text: string; buttonText?: string; onClick?: () => void } => {
-    if (props.previewUrl) {
+    if (props.onPreview) {
       return {
         text: props.previewText!,
         buttonText: props.previewButtonText!,
-        onClick: () => {} // TODO: open props.previewUrl
+        onClick: props.onPreview
       };
-    } else if (props.downloadUrl) {
+    } else if (props.onDownload) {
       return {
         text: props.downloadText!,
         buttonText: props.downloadButtonText!,
-        onClick: () => {} // TODO: download props.downloadUrl
+        onClick: props.onDownload
       };
     }
     return {

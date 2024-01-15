@@ -38,6 +38,11 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
     this.init(source, config);
   }
 
+  get player() {
+    // @ts-ignore
+    return KalturaPlayer.getPlayer(this.config.targetId);
+  }
+
   private init(source: any, config: any): void {
     this.source = source;
     this.config = config;
@@ -112,12 +117,12 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
     const docOverlayProps: IvqOverlayProps = {};
     const tempURL = 'https://kaltura.com'; // TODO: read previewUrl from hostpage URL
     if (tempURL) {
-      docOverlayProps.previewUrl = this.source.url;
+      docOverlayProps.onPreview = this.onPreview;
     } else if (!this.config.docSourceOptions?.downloadDisabled) {
-      docOverlayProps.downloadUrl = this.source.url;
+      docOverlayProps.onDownload = this.onDownload;
     }
-    // @ts-ignore
-    this.docOverlay = KalturaPlayer.getPlayer(this.config.targetId).ui.addComponent({
+
+    this.docOverlay = this.player.ui.addComponent({
       label: 'kaltura-ivq-review-screen',
       presets: ['Playback'],
       container: 'GuiArea',
@@ -126,6 +131,19 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
       }
     });
   }
+
+  private onPreview() {
+    console.log('>> this.source.url', this.source.url);
+  }
+
+  private onDownload = () => {
+    const aElement = document.createElement('a');
+    aElement.href = this.source.url;
+    aElement.hidden = true;
+    aElement.download = this.player.sources.metadata.name || this.source.id;
+    aElement.rel = 'noopener noreferrer';
+    aElement.click();
+  };
 
   private reloadHigherQualityOnFullscreen(): void {
     if (document.fullscreenElement && !this.isReloadedOnfullscreen) {
@@ -142,7 +160,7 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
   }
 
   public play(): Promise<void> {
-    if (this.isTimedImage()) this.timer.start(this.duration);
+    if (this.isTimedDoc()) this.timer.start(this.duration);
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PLAYBACK_START));
 
@@ -164,7 +182,7 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
     return Promise.resolve();
   }
 
-  private isTimedImage(): boolean {
+  private isTimedDoc(): boolean {
     return this.config.sources.duration > 0;
   }
 
