@@ -56,7 +56,6 @@ npm run pre:commit
 # 1. types check
 # 2. lint check
 # 3. generate/update types
-# 4. generate/update docs
 ```
 
 The dev server will host files on port 8000. Once started, the demo can be found running at http://localhost:8000/.

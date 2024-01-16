@@ -1,7 +1,7 @@
 {
   "name": "@playkit-js/doc-player",
   "version": "0.0.1",
-  "description": "Doc engine for Kaltura Player",
+  "description": "Engine for Kaltura Player that supports document type sources",
   "main": "dist/playkit-doc-player.js",
   "types": "types/index.d.ts",
   "files": [
@@ -31,8 +31,8 @@
     "build:dev": "webpack --mode development",
     "build": "webpack --mode production",
     "test": "echo 'Tests placeholder'",
-    "types:check": "tsc src/index.ts --jsx react --jsxFactory h --noEmit --target ESNext --moduleResolution node --experimentalDecorators --jsxFragmentFactory Fragment",
-    "types:genarate": "tsc src/index.ts --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --jsxFragmentFactory Fragment --stripInternal true --target ESNext --moduleResolution node --experimentalDecorators",
+    "types:check": "tsc src/index.ts --jsx react --jsxFactory h --noEmit --skipLibCheck --target ESNext --moduleResolution node --experimentalDecorators --jsxFragmentFactory Fragment",
+    "types:genarate": "tsc src/index.ts --skipLibCheck --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --jsxFragmentFactory Fragment --stripInternal true --target ESNext --moduleResolution node --experimentalDecorators",
     "lint:check": "eslint . --color",
     "lint:fix": "npm run lint:check -- --fix",
     "prettier:fix": "prettier --write .",
@@ -47,8 +47,8 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@playkit-js/kaltura-player-js": "^3.17.7",
-    "@playkit-js/playkit-js": "canary",
-    "@playkit-js/playkit-js-ui": "canary",
+    "@playkit-js/playkit-js": "0.82.6-canary.0-f9fd0e4",
+    "@playkit-js/playkit-js-ui": "0.77.14-canary.0-1a5779a",
     "@types/node": "^14.11.2",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
@@ -76,7 +76,7 @@
   },
   "peerDependencies": {
     "@playkit-js/kaltura-player-js": "latest",
-    "@playkit-js/playkit-js": "^0.80.8"
+    "@playkit-js/playkit-js": "latest"
   },
   "publishConfig": {
     "access": "public"

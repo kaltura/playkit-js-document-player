@@ -1,10 +1,8 @@
 /* eslint-disable  @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { h } from 'preact';
 import { ui } from '@playkit-js/kaltura-player-js';
 import { OverlayPortal } from '@playkit-js/common/dist/hoc/overlay-portal';
 import { Button, ButtonSize, ButtonType } from '@playkit-js/common/dist/components/button';
-// @ts-ignore
 import * as styles from './doc-overlay.scss';
 
 const { withText, Text } = ui.preacti18n;
