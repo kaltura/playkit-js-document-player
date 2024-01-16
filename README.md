@@ -94,20 +94,6 @@ Run type-check to verify TypeScript types
 npm run types:check
 ```
 
-### Automated tests (Mocha/Karma)
-
-Run all tests at once:
-
-```
-npm test
-```
-
-Run unit tests in watch mode:
-
-```
-npm run test:watch
-```
-
 ## Compatibility
 
 playkit-js-doc-player is supported on:
