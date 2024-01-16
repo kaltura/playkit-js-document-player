@@ -1,4 +1,3 @@
-// These lint rules are temporarily disabled until our fully typescript support is added
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */

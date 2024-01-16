@@ -24,20 +24,22 @@
     "player"
   ],
   "scripts": {
+    "clean": "rimraf ./dist",
+    "prebuild": "npm run clean",
     "dev": "npm run build:dev && webpack serve --mode development",
     "watch": "webpack --watch --mode development",
     "build:dev": "webpack --mode development",
     "build": "webpack --mode production",
     "test": "echo 'Tests placeholder'",
     "types:check": "tsc src/index.ts --jsx react --jsxFactory h --noEmit --target ESNext --moduleResolution node --experimentalDecorators --jsxFragmentFactory Fragment",
-    "types:ganarate": "tsc src/index.ts --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --jsxFragmentFactory Fragment --stripInternal true --target ESNext --moduleResolution node --experimentalDecorators",
-    "lint:check": "eslint src --ext .ts,.tsx,.js --color ",
+    "types:genarate": "tsc src/index.ts --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --jsxFragmentFactory Fragment --stripInternal true --target ESNext --moduleResolution node --experimentalDecorators",
+    "lint:check": "eslint . --color",
     "lint:fix": "npm run lint:check -- --fix",
     "prettier:fix": "prettier --write .",
     "release": "standard-version",
     "pushTaggedRelease": "git push --follow-tags --no-verify origin master",
     "commit:dist": "git add --force --all dist && (git commit -m 'chore: update dist' || exit 0)",
-    "pre:commit": "npm run types:check && npm run lint:check && npm run types:ganarate && npm run docs:ganarate"
+    "pre:commit": "npm run types:check && npm run lint:check && npm run types:genarate"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
@@ -60,6 +62,7 @@
     "prettier": "^2.6.2",
     "promise-polyfill": "^8.2.3",
     "regenerator-runtime": "^0.13.11",
+    "rimraf": "^5.0.5",
     "sass": "^1.52.1",
     "sass-loader": "^13.0.0",
     "sinon": "^14.0.0",

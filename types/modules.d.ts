@@ -8,8 +8,8 @@ declare module "timer" {
         private duration;
         constructor();
         start(duration: number): void;
+        end(): void;
         private handleRestart;
-        pause(): void;
         seek(to: number): void;
         speed(playbackRate: number): void;
         get currentTime(): number;
@@ -18,11 +18,27 @@ declare module "timer" {
         reset(): void;
     }
 }
+declare module "components/doc-overlay/doc-overlay" {
+    export interface IvqOverlayProps {
+        onPreview?: () => void;
+        previewText?: string;
+        previewButtonText?: string;
+        onDownload?: () => void;
+        downloadText?: string;
+        downloadButtonText?: string;
+        contentUnavailableText?: string;
+    }
+    export const DocOverlay: any;
+}
+declare module "components/doc-overlay/index" {
+    export * from "components/doc-overlay/doc-overlay";
+}
 declare module "doc-player" {
     import { IEngine, FakeEventTarget } from '@playkit-js/playkit-js';
     export class DocPlayer extends FakeEventTarget implements IEngine {
         static _logger: any;
         static id: string;
+        static configName: string;
         private eventManager;
         private el;
         private source;
@@ -30,20 +46,28 @@ declare module "doc-player" {
         private _playbackRate;
         private timer;
         private isFirstPlay;
+        private isLoadingStart;
+        private isReloadedOnfullscreen;
+        private docOverlay;
         constructor(source: any, config: any);
+        get player(): any;
         private init;
         private setDefaultConfig;
         private createImageElement;
+        private updSourceParams;
+        private shouldAddKs;
+        private getPlayerWidth;
         load(startTime: number): Promise<{
             tracks: [];
         }>;
-        private attach;
+        private addListeners;
+        private addUI;
+        private onPreview;
+        private onDownload;
+        private reloadHigherQualityOnFullscreen;
         play(): Promise<void>;
-        private isTimedImage;
+        private isTimedDoc;
         private onImageLoaded;
-        private concatenateThumbnailParams;
-        private shouldAddKs;
-        private getPlayerWidth;
         static isSupported(): boolean;
         static createEngine(source: any, config: any): IEngine;
         static canPlaySource(source: any): boolean;
@@ -51,7 +75,6 @@ declare module "doc-player" {
         static getCapabilities(): Promise<any>;
         static prepareVideoElement(): void;
         attachMediaSource(): void;
-        destroy(): void;
         detach(): void;
         detachMediaSource(): void;
         enableAdaptiveBitrate(): void;
@@ -64,13 +87,13 @@ declare module "doc-player" {
         isLive(): boolean;
         isPictureInPictureSupported(): boolean;
         pause(): void;
-        reset(): void;
         resetAllCues(): void;
         restore(source: any, config: any): void;
         seekToLiveEdge(): void;
         selectAudioTrack(audioTrack: any): void;
         selectTextTrack(textTrack: TextTrack): void;
         selectVideoTrack(videoTrack: any): void;
+        get src(): string;
         get id(): string;
         get playbackRates(): number[];
         set playbackRate(playbackRate: number);
@@ -80,6 +103,9 @@ declare module "doc-player" {
         set currentTime(to: number);
         get buffered(): TimeRanges;
         getThumbnail(time: number): null;
+        getDrmInfo(): null;
+        reset(): void;
+        destroy(): void;
     }
 }
 declare module "index" { }
