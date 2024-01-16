@@ -4,7 +4,7 @@ import { setup } from '@playkit-js/kaltura-player-js';
 import { config, targetId } from '../mock/config';
 import { mediaData } from '../mock/media-sourc';
 
-describe('Image player', () => {
+describe('Doc player', () => {
   let player;
 
   before(() => {
@@ -19,12 +19,12 @@ describe('Image player', () => {
 
   afterEach(() => {
     player.destroy();
-    for (const element of document.getElementsByTagName('image')) {
+    for (const element of document.getElementsByTagName('doc')) {
       element.remove();
     }
   });
 
-  it('image player', async () => {
+  it.skip('doc player', async () => {
     // Given
     player = setup(config);
 

@@ -11,6 +11,7 @@ import { Timer } from './timer';
 import { DocOverlay, IvqOverlayProps } from './components/doc-overlay';
 
 const PLAYBACK_RATES = [0.5, 1, 1.5, 2];
+const PRESET_AREAS = ['Doc', 'Playback'];
 
 export class DocPlayer extends FakeEventTarget implements IEngine {
   public static _logger: any = getLogger('Document');
@@ -125,7 +126,7 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
 
     this.docOverlay = this.player.ui.addComponent({
       label: 'kaltura-ivq-review-screen',
-      presets: ['Doc'],
+      presets: PRESET_AREAS,
       container: 'GuiArea',
       get: () => {
         return <DocOverlay {...docOverlayProps} />;
@@ -153,7 +154,7 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
       if (currentWidth < fullscreenWidth) {
         this.source.thumbnailUrl = this.source.thumbnailUrl.replace(/\/width\/([0-9]+)/, `/width/${fullscreenWidth}`);
         this.load(0).then(() => {
-          DocPlayer._logger.debug('Entering fullscreen mode - image reloaded');
+          DocPlayer._logger.debug('Entering fullscreen mode - preview reloaded');
         });
         this.isReloadedOnfullscreen = true;
       }
