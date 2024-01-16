@@ -40,7 +40,7 @@ export class Timer extends FakeEventTarget {
     this._currentTime = to;
   }
 
-  public speed(playbackRate: number): void {
+  public setSpeed(playbackRate: number): void {
     this.playbackRate = playbackRate;
 
     if (this.intervalID) {

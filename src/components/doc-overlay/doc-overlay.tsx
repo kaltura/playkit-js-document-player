@@ -17,7 +17,7 @@ const translates = {
   contentUnavailableText: <Text id="docPlayer.contentUnavailableText">Supply & Demand is unavailable to view.</Text>
 };
 
-export interface IvqOverlayProps {
+export interface DocOverlayProps {
   onPreview?: () => void;
   previewText?: string;
   previewButtonText?: string;
@@ -27,7 +27,7 @@ export interface IvqOverlayProps {
   contentUnavailableText?: string;
 }
 
-export const DocOverlay = withText(translates)((props: IvqOverlayProps) => {
+export const DocOverlay = withText(translates)((props: DocOverlayProps) => {
   const getContent = (): { text: string; buttonText?: string; onClick?: () => void } => {
     if (props.onPreview) {
       return {

@@ -11,7 +11,7 @@ declare module "timer" {
         end(): void;
         private handleRestart;
         seek(to: number): void;
-        speed(playbackRate: number): void;
+        setSpeed(playbackRate: number): void;
         get currentTime(): number;
         private isTimeUp;
         private onTimeIsUp;
@@ -19,7 +19,7 @@ declare module "timer" {
     }
 }
 declare module "components/doc-overlay/doc-overlay" {
-    export interface IvqOverlayProps {
+    export interface DocOverlayProps {
         onPreview?: () => void;
         previewText?: string;
         previewButtonText?: string;
@@ -48,7 +48,7 @@ declare module "doc-player" {
         private isFirstPlay;
         private isLoadingStart;
         private isReloadedOnfullscreen;
-        private docOverlay;
+        private docOverlayDisposer;
         constructor(source: any, config: any);
         get player(): any;
         private init;

@@ -8,7 +8,7 @@ import { h } from 'preact';
 // @ts-ignore
 import { IEngine, FakeEventTarget, FakeEvent, EventManager, EventType, getLogger, Utils } from '@playkit-js/playkit-js';
 import { Timer } from './timer';
-import { DocOverlay, IvqOverlayProps } from './components/doc-overlay';
+import { DocOverlay, DocOverlayProps } from './components/doc-overlay';
 
 const PLAYBACK_RATES = [0.5, 1, 1.5, 2];
 const PRESET_AREAS = ['Doc', 'Playback'];
@@ -26,7 +26,7 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
   private isFirstPlay: boolean;
   private isLoadingStart: boolean;
   private isReloadedOnfullscreen: boolean;
-  private docOverlay: (() => void) | null = null;
+  private docOverlayDisposer: (() => void) | null = null;
 
   constructor(source: any, config: any) {
     super();
@@ -64,7 +64,7 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
   }
 
   private updSourceParams(): void {
-    const docAPIParams: any = {
+    const docAPIParams: Record<string, string> = {
       ...(this.shouldAddKs() && { ks: this.config.session.ks })
     };
 
@@ -117,14 +117,14 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
 
   private addUI(): void {
     const docPlayerConfig = this.config.externals?.[DocPlayer.configName] || {};
-    const docOverlayProps: IvqOverlayProps = {};
+    const docOverlayProps: DocOverlayProps = {};
     if (docPlayerConfig.basePreviewUrl) {
       docOverlayProps.onPreview = (): void => this.onPreview(`${docPlayerConfig.basePreviewUrl}${this.source.id}`);
     } else if (!docPlayerConfig.downloadDisabled) {
       docOverlayProps.onDownload = this.onDownload;
     }
 
-    this.docOverlay = this.player.ui.addComponent({
+    this.docOverlayDisposer = this.player.ui.addComponent({
       label: 'kaltura-ivq-review-screen',
       presets: PRESET_AREAS,
       container: 'GuiArea',
@@ -293,7 +293,7 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
 
   public set playbackRate(playbackRate: number) {
     this._playbackRate = playbackRate;
-    this.timer.speed(playbackRate);
+    this.timer.setSpeed(playbackRate);
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.RATE_CHANGE));
   }
@@ -337,8 +337,8 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
   }
 
   public reset(): void {
-    if (this.docOverlay) {
-      this.docOverlay();
+    if (this.docOverlayDisposer) {
+      this.docOverlayDisposer();
     }
     this.eventManager.removeAll();
     this.isFirstPlay = true;
