@@ -1,4 +1,5 @@
 // These lint rules are temporarily disabled until our fully typescript support is added
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -26,7 +27,7 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
   private isFirstPlay: boolean;
   private isLoadingStart: boolean;
   private isReloadedOnfullscreen: boolean;
-  private docOverlay: null | Function = null;
+  private docOverlay: (() => void) | null = null;
 
   constructor(source: any, config: any) {
     super();
@@ -40,7 +41,7 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
     this.init(source, config);
   }
 
-  get player() {
+  get player(): any {
     // @ts-ignore
     return KalturaPlayer.getPlayer(this.config.targetId);
   }
@@ -119,7 +120,7 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
     const docPlayerConfig = this.config.externals?.[DocPlayer.configName] || {};
     const docOverlayProps: IvqOverlayProps = {};
     if (docPlayerConfig.basePreviewUrl) {
-      docOverlayProps.onPreview = () => this.onPreview(`${docPlayerConfig.basePreviewUrl}${this.source.id}`);
+      docOverlayProps.onPreview = (): void => this.onPreview(`${docPlayerConfig.basePreviewUrl}${this.source.id}`);
     } else if (!docPlayerConfig.downloadDisabled) {
       docOverlayProps.onDownload = this.onDownload;
     }
@@ -134,11 +135,11 @@ export class DocPlayer extends FakeEventTarget implements IEngine {
     });
   }
 
-  private onPreview = (url: string) => {
+  private onPreview = (url: string): void => {
     (window as any).open(url, '_blank').focus();
   };
 
-  private onDownload = () => {
+  private onDownload = (): void => {
     const aElement = document.createElement('a');
     aElement.href = this.source.url;
     aElement.hidden = true;

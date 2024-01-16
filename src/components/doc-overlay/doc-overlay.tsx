@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-unused-vars */
 import { h } from 'preact';
 import { ui } from '@playkit-js/kaltura-player-js';
 import { OverlayPortal } from '@playkit-js/common/dist/hoc/overlay-portal';
