@@ -6,7 +6,7 @@ import { DocumentPlayerEngine } from './doc-player-engine';
 import { DocumentOverlay, DocumentOverlayProps } from './components/doc-overlay';
 import { DocumentPlayerConfig } from './types/doc-player-config';
 
-const PRESET_AREAS = ['Doc', 'Playback'];
+const PRESET_AREAS = ['Document', 'Playback'];
 
 export const pluginName: string = 'playkit-js-doc-player';
 
