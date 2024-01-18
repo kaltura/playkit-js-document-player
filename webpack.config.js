@@ -1,4 +1,13 @@
+const webpack = require('webpack');
 const path = require('path');
+const packageData = require('./package.json');
+
+const plugins = [
+  new webpack.DefinePlugin({
+    __VERSION__: JSON.stringify(packageData.version),
+    __NAME__: JSON.stringify(packageData.name)
+  })
+];
 
 module.exports = (env, { mode }) => {
   return {
@@ -48,6 +57,7 @@ module.exports = (env, { mode }) => {
       path: path.resolve(__dirname, 'dist'),
       clean: true
     },
+    plugins: plugins,
     externals: {
       '@playkit-js/playkit-js': ['KalturaPlayer', 'core'],
       '@playkit-js/kaltura-player-js': ['KalturaPlayer'],
