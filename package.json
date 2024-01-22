@@ -1,25 +1,25 @@
 {
-  "name": "@playkit-js/doc-player",
+  "name": "@playkit-js/document-player",
   "version": "0.0.1",
   "description": "Engine for Kaltura Player that supports document type sources",
-  "main": "dist/playkit-doc-player.js",
+  "main": "dist/playkit-document-player.js",
   "types": "types/index.d.ts",
   "files": [
     "dist/",
     "types/"
   ],
   "bugs": {
-    "url": "https://github.com/kaltura/playkit-js-doc-player/issues"
+    "url": "https://github.com/kaltura/playkit-js-document-player/issues"
   },
   "license": "AGPL-3.0",
-  "homepage": "https://github.com/kaltura/playkit-js-doc-player#readme",
+  "homepage": "https://github.com/kaltura/playkit-js-document-player#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kaltura/playkit-js-doc-player"
+    "url": "https://github.com/kaltura/playkit-js-document-player"
   },
   "keywords": [
-    "@playkit-js/doc-player",
-    "doc-player",
+    "@playkit-js/document-player",
+    "document-player",
     "kaltura",
     "player"
   ],

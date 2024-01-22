@@ -6,6 +6,7 @@
 
 // @ts-ignore
 import { IEngine, FakeEventTarget, FakeEvent, EventManager, EventType, getLogger, Utils } from '@playkit-js/playkit-js';
+import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
 import { Timer } from './timer';
 
 const PLAYBACK_RATES = [0.5, 1, 1.5, 2];
@@ -14,6 +15,7 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
   public static _logger: any = getLogger('Document');
   public static id = 'document';
   public static getPlayerWidth: () => number;
+  public static player: KalturaPlayer;
 
   private eventManager: EventManager;
   private el!: HTMLImageElement;
@@ -75,7 +77,7 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
     return typeof this.config.session?.isAnonymous === 'boolean' && !this.config.session.isAnonymous;
   }
 
-  public async load(startTime: number): Promise<{ tracks: [] }> {
+  public async load(): Promise<{ tracks: [] }> {
     this.isLoadingStart = true;
     return new Promise((resolve, reject) => {
       this.el.onload = (): void => {
@@ -83,7 +85,7 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
         this.onImageLoaded();
       };
       this.el.onerror = (error): void => {
-        DocumentPlayerEngine._logger.error(`The doc thumbnail failed to load, url:${this.source.url}`, error);
+        DocumentPlayerEngine._logger.error(`The document thumbnail failed to load, url:${this.source.url}`, error);
         reject(error);
       };
       // @ts-ignore
@@ -97,7 +99,7 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
     this.eventManager.listen(this.timer, EventType.ENDED, (event: FakeEvent) => this.dispatchEvent(event));
     // @ts-ignore
     this.eventManager.listen(this.timer, EventType.TIME_UPDATE, (event: FakeEvent) => this.dispatchEvent(event));
-    this.eventManager.listen(document.getElementById(this.config.targetId), 'fullscreenchange', (event: string) => {
+    this.eventManager.listen(DocumentPlayerEngine.player, 'fullscreenchange', () => {
       this.reloadHigherQualityOnFullscreen();
     });
   }
@@ -108,7 +110,7 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
       const fullscreenWidth = document.body.offsetWidth;
       if (currentWidth < fullscreenWidth) {
         this.source.thumbnailUrl = this.source.thumbnailUrl.replace(/\/width\/([0-9]+)/, `/width/${fullscreenWidth}`);
-        this.load(0).then(() => {
+        this.load().then(() => {
           DocumentPlayerEngine._logger.debug('Entering fullscreen mode - preview reloaded');
         });
         this.isReloadedOnfullscreen = true;
@@ -117,7 +119,9 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
   }
 
   public play(): Promise<void> {
-    if (this.isTimedDoc()) this.timer.start(this.duration);
+    if (this.isTimedDoc()) {
+      this.timer.start(this.duration);
+    }
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PLAYBACK_START));
 
@@ -158,7 +162,7 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
     return new this(source, config);
   }
 
-  public static canPlaySource(source: any): boolean {
+  public static canPlaySource(): boolean {
     return true;
   }
 
@@ -176,7 +180,7 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
   }
 
   public static prepareVideoElement(): void {
-    DocumentPlayerEngine._logger.debug('Prepare the Image element for doc preview');
+    DocumentPlayerEngine._logger.debug('Prepare the Image element for document preview');
   }
 
   public attachMediaSource(): void {}
@@ -228,11 +232,11 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
 
   public seekToLiveEdge(): void {}
 
-  public selectAudioTrack(audioTrack: any): void {}
+  public selectAudioTrack(): void {}
 
-  public selectTextTrack(textTrack: TextTrack): void {}
+  public selectTextTrack(): void {}
 
-  public selectVideoTrack(videoTrack: any): void {}
+  public selectVideoTrack(): void {}
 
   public get src(): string {
     return this.isLoadingStart && this.source ? this.source.url : '';
@@ -273,17 +277,17 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
 
   public get buffered(): TimeRanges {
     return {
-      start(index: number): number {
+      start(): number {
         return 0;
       },
-      end(index: number): number {
+      end(): number {
         return 0;
       },
       length: 0
     };
   }
 
-  public getThumbnail(time: number): null {
+  public getThumbnail(): null {
     return null;
   }
 

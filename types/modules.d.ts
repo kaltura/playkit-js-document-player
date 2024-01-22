@@ -1,3 +1,4 @@
+/// <reference path="../src/global.d.ts" />
 declare module "timer" {
     import { FakeEventTarget } from '@playkit-js/playkit-js';
     export class Timer extends FakeEventTarget {
@@ -18,27 +19,14 @@ declare module "timer" {
         reset(): void;
     }
 }
-declare module "components/doc-overlay/doc-overlay" {
-    export interface DocOverlayProps {
-        onPreview?: () => void;
-        previewText?: string;
-        previewButtonText?: string;
-        onDownload?: () => void;
-        downloadText?: string;
-        downloadButtonText?: string;
-        contentUnavailableText?: string;
-    }
-    export const DocOverlay: any;
-}
-declare module "components/doc-overlay/index" {
-    export * from "components/doc-overlay/doc-overlay";
-}
-declare module "doc-player" {
+declare module "doc-player-engine" {
     import { IEngine, FakeEventTarget } from '@playkit-js/playkit-js';
-    export class DocPlayer extends FakeEventTarget implements IEngine {
+    import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
+    export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
         static _logger: any;
         static id: string;
-        static configName: string;
+        static getPlayerWidth: () => number;
+        static player: KalturaPlayer;
         private eventManager;
         private el;
         private source;
@@ -48,22 +36,16 @@ declare module "doc-player" {
         private isFirstPlay;
         private isLoadingStart;
         private isReloadedOnfullscreen;
-        private docOverlayDisposer;
         constructor(source: any, config: any);
-        get player(): any;
         private init;
         private setDefaultConfig;
         private createImageElement;
         private updSourceParams;
         private shouldAddKs;
-        private getPlayerWidth;
         load(startTime: number): Promise<{
             tracks: [];
         }>;
         private addListeners;
-        private addUI;
-        private onPreview;
-        private onDownload;
         private reloadHigherQualityOnFullscreen;
         play(): Promise<void>;
         private isTimedDoc;
@@ -108,4 +90,50 @@ declare module "doc-player" {
         destroy(): void;
     }
 }
-declare module "index" { }
+declare module "components/doc-overlay/doc-overlay" {
+    export interface DocumentOverlayProps {
+        onPreview?: () => void;
+        previewText?: string;
+        previewButtonText?: string;
+        onDownload?: () => void;
+        downloadText?: string;
+        downloadButtonText?: string;
+        contentUnavailableText?: string;
+    }
+    export const DocumentOverlay: any;
+}
+declare module "components/doc-overlay/index" {
+    export * from "components/doc-overlay/doc-overlay";
+}
+declare module "types/doc-player-config" {
+    export interface DocumentPlayerConfig {
+        basePreviewUrl: string;
+        downloadDisabled: boolean;
+    }
+}
+declare module "doc-player" {
+    import { core } from '@playkit-js/kaltura-player-js';
+    import { DocumentPlayerConfig } from "types/doc-player-config";
+    export const pluginName: string;
+    export class PlaykitJsDocumentPlugin extends core.BasePlugin {
+        private player;
+        private config;
+        static defaultConfig: DocumentPlayerConfig;
+        private docOverlayDisposer;
+        constructor(name: string, player: any, config: DocumentPlayerConfig);
+        static isValid(): boolean;
+        loadMedia(): void;
+        private addUI;
+        private onPreview;
+        private onDownload;
+        reset(): void;
+        destroy(): void;
+    }
+}
+declare module "index" {
+    import { PlaykitJsDocumentPlugin } from "doc-player";
+    const VERSION: string;
+    const NAME: string;
+    export { PlaykitJsDocumentPlugin as Plugin };
+    export { VERSION, NAME };
+}

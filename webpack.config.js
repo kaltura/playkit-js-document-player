@@ -53,7 +53,7 @@ module.exports = (env, { mode }) => {
       extensions: ['.tsx', '.ts', '.js']
     },
     output: {
-      filename: 'playkit-doc-player.js',
+      filename: 'playkit-document-player.js',
       path: path.resolve(__dirname, 'dist'),
       clean: true
     },

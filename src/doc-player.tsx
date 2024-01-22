@@ -1,6 +1,11 @@
-import { h } from 'preact';
 // TODO use updated player types
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
+/* eslint-disable @typescript-eslint/no-empty-function */
+
+import { h } from 'preact';
 // @ts-ignore
 import { registerEngine } from '@playkit-js/playkit-js';
 import { core } from '@playkit-js/kaltura-player-js';
@@ -10,10 +15,8 @@ import { DocumentPlayerConfig } from './types/doc-player-config';
 
 const PRESET_AREAS = ['Document', 'Playback'];
 
-export const pluginName: string = 'playkit-js-doc-player';
+export const pluginName = 'playkit-js-document-player';
 
-// TODO use updated player types
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export class PlaykitJsDocumentPlugin extends core.BasePlugin {
   static defaultConfig: DocumentPlayerConfig = {
@@ -25,11 +28,12 @@ export class PlaykitJsDocumentPlugin extends core.BasePlugin {
 
   constructor(name: string, private player: any, private config: DocumentPlayerConfig) {
     super(name, player, config);
-    // @ts-ignore
-    DocumentPlayerEngine.getPlayerWidth = () => {
+    DocumentPlayerEngine.getPlayerWidth = (): number => {
       const playerState = this.player.ui.store.getState();
       return Math.round(playerState?.shell?.guiClientRect?.width);
     };
+    DocumentPlayerEngine.player = this.player;
+
     registerEngine(DocumentPlayerEngine.id, DocumentPlayerEngine);
   }
 
@@ -37,7 +41,7 @@ export class PlaykitJsDocumentPlugin extends core.BasePlugin {
     return true;
   }
 
-  loadMedia() {
+  loadMedia(): void {
     if (this.player.isDocument()) {
       this.addUI();
     }

@@ -1,12 +1,12 @@
 # PlayKit JS Doc Player - Doc Player plugin for the [PlayKit JS Player]
 
-[![Build Status](https://github.com/kaltura/playkit-js-doc-player/actions/workflows/run_canary_full_flow.yaml/badge.svg)](https://github.com/kaltura/playkit-js-doc-player/actions/workflows/run_canary_full_flow.yaml)
-[![](https://img.shields.io/npm/v/@playkit-js/doc-player/latest.svg)](https://www.npmjs.com/package/@playkit-js/doc-player)
-[![](https://img.shields.io/npm/v/@playkit-js/doc-player/canary.svg)](https://www.npmjs.com/package/@playkit-js/doc-player/v/canary)
+[![Build Status](https://github.com/kaltura/playkit-js-document-player/actions/workflows/run_canary_full_flow.yaml/badge.svg)](https://github.com/kaltura/playkit-js-document-player/actions/workflows/run_canary_full_flow.yaml)
+[![](https://img.shields.io/npm/v/@playkit-js/document-player/latest.svg)](https://www.npmjs.com/package/@playkit-js/document-player)
+[![](https://img.shields.io/npm/v/@playkit-js/document-player/canary.svg)](https://www.npmjs.com/package/@playkit-js/document-player/v/canary)
 
-playkit-js-doc-player is a [kaltura player] engine enabling [kaltura player] to play an Doc
+playkit-js-document-player is a [kaltura player] engine enabling [kaltura player] to play an Doc
 
-playkit-js-doc-player is written in [ECMAScript6] (`*.js`) and [TypeScript] (`*.ts`) (strongly typed superset of ES6), 
+playkit-js-document-player is written in [ECMAScript6] (`*.js`) and [TypeScript] (`*.ts`) (strongly typed superset of ES6), 
 and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeScript compiler].
 
 [Webpack] is used to build the distro bundle and serve the local development environment.
@@ -40,10 +40,10 @@ The Doc mode will be determined according to the duration configured with the en
 
 ```sh
 # First, checkout the repository and install the required dependencies
-git clone https://github.com/kaltura/playkit-js-doc-player.git
+git clone https://github.com/kaltura/playkit-js-document-player.git
 
 # Navigate to the repo dir
-cd playkit-js-doc-player
+cd playkit-js-document-player
 
 # Run dev-server for demo page (recompiles on file-watch, and write to actual dist fs artifacts)
 npm run dev
@@ -95,7 +95,7 @@ npm run types:check
 
 ## Compatibility
 
-playkit-js-doc-player is supported on:
+playkit-js-document-player is supported on:
 
 - Chrome 39+ for Android
 - Chrome 39+ for Desktop
@@ -108,4 +108,4 @@ playkit-js-doc-player is supported on:
 
 ## License
 
-playkit-js-doc-player is released under [Apache 2.0 License](LICENSE)
+playkit-js-document-player is released under [Apache 2.0 License](LICENSE)
