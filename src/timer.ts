@@ -1,3 +1,4 @@
+// TODO use updated player types
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 import { FakeEvent, FakeEventTarget, EventType } from '@playkit-js/playkit-js';

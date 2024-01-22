@@ -1,4 +1,6 @@
 import { h } from 'preact';
+// TODO use updated player types
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { registerEngine } from '@playkit-js/playkit-js';
 import { core } from '@playkit-js/kaltura-player-js';
@@ -10,6 +12,8 @@ const PRESET_AREAS = ['Document', 'Playback'];
 
 export const pluginName: string = 'playkit-js-doc-player';
 
+// TODO use updated player types
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export class PlaykitJsDocumentPlugin extends core.BasePlugin {
   static defaultConfig: DocumentPlayerConfig = {
