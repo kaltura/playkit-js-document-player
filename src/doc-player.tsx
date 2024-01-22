@@ -25,6 +25,11 @@ export class PlaykitJsDocumentPlugin extends core.BasePlugin {
 
   constructor(name: string, private player: any, private config: DocumentPlayerConfig) {
     super(name, player, config);
+    // @ts-ignore
+    DocumentPlayerEngine.getPlayerWidth = () => {
+      const playerState = this.player.ui.store.getState();
+      return Math.round(playerState?.shell?.guiClientRect?.width);
+    };
     registerEngine(DocumentPlayerEngine.id, DocumentPlayerEngine);
   }
 

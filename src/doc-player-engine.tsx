@@ -13,6 +13,8 @@ const PLAYBACK_RATES = [0.5, 1, 1.5, 2];
 export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
   public static _logger: any = getLogger('Document');
   public static id = 'document';
+  public static getPlayerWidth: () => number;
+
   private eventManager: EventManager;
   private el!: HTMLImageElement;
   private source: any;
@@ -58,7 +60,7 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
     };
 
     const docThumbParams: any = {
-      width: this.getPlayerWidth()
+      width: DocumentPlayerEngine.getPlayerWidth()
     };
 
     Object.keys(docAPIParams).forEach((parmaName: string) => {
@@ -71,10 +73,6 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
 
   private shouldAddKs(): boolean {
     return typeof this.config.session?.isAnonymous === 'boolean' && !this.config.session.isAnonymous;
-  }
-
-  private getPlayerWidth(): number {
-    return document.getElementById(this.config.targetId)!.offsetWidth;
   }
 
   public async load(startTime: number): Promise<{ tracks: [] }> {
@@ -106,7 +104,7 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
 
   private reloadHigherQualityOnFullscreen(): void {
     if (document.fullscreenElement && !this.isReloadedOnfullscreen) {
-      const currentWidth = this.getPlayerWidth();
+      const currentWidth = DocumentPlayerEngine.getPlayerWidth();
       const fullscreenWidth = document.body.offsetWidth;
       if (currentWidth < fullscreenWidth) {
         this.source.thumbnailUrl = this.source.thumbnailUrl.replace(/\/width\/([0-9]+)/, `/width/${fullscreenWidth}`);
