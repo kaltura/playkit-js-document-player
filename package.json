@@ -33,22 +33,21 @@
     "test": "echo 'Tests placeholder'",
     "types:check": "tsc src/index.ts --jsx react --jsxFactory h --noEmit --skipLibCheck --target ESNext --moduleResolution node --experimentalDecorators --jsxFragmentFactory Fragment",
     "types:genarate": "tsc src/index.ts --skipLibCheck --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --jsxFragmentFactory Fragment --stripInternal true --target ESNext --moduleResolution node --experimentalDecorators",
-    "lint:check": "eslint . --color",
+    "lint": "eslint . --color",
     "lint:fix": "npm run lint:check -- --fix",
     "prettier:fix": "prettier --write .",
     "release": "standard-version",
     "pushTaggedRelease": "git push --follow-tags --no-verify origin master",
     "commit:dist": "git add --force --all dist && (git commit -m 'chore: update dist' || exit 0)",
-    "pre:commit": "npm run types:check && npm run lint:check && npm run types:genarate"
+    "pre:commit": "npm run types:check && npm run lint && npm run types:genarate"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
-    "@playkit-js/kaltura-player-js": "^3.17.7",
-    "@playkit-js/playkit-js": "0.82.6-canary.0-f9fd0e4",
-    "@playkit-js/playkit-js-ui": "0.77.14-canary.0-1a5779a",
+    "@playkit-js/kaltura-player-js": "3.18.0-canary.0-f09608b",
+    "@playkit-js/playkit-js": "^0.84.5-canary.0-df6fd72",
     "@types/node": "^14.11.2",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
@@ -75,8 +74,8 @@
     "webpack-dev-server": "^4.10.1"
   },
   "peerDependencies": {
-    "@playkit-js/kaltura-player-js": "latest",
-    "@playkit-js/playkit-js": "latest"
+    "@playkit-js/kaltura-player-js": "3.18.0-canary.0-f09608b",
+    "@playkit-js/playkit-js": "^0.84.5-canary.0-df6fd72"
   },
   "publishConfig": {
     "access": "public"

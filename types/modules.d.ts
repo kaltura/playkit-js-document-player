@@ -42,7 +42,7 @@ declare module "doc-player-engine" {
         private createImageElement;
         private updSourceParams;
         private shouldAddKs;
-        load(startTime: number): Promise<{
+        load(): Promise<{
             tracks: [];
         }>;
         private addListeners;
@@ -52,9 +52,10 @@ declare module "doc-player-engine" {
         private onImageLoaded;
         static isSupported(): boolean;
         static createEngine(source: any, config: any): IEngine;
-        static canPlaySource(source: any): boolean;
+        static canPlaySource(): boolean;
         static runCapabilities(): void;
         static getCapabilities(): Promise<any>;
+        static setCapabilities(): void;
         static prepareVideoElement(): void;
         attachMediaSource(): void;
         detach(): void;
@@ -72,9 +73,9 @@ declare module "doc-player-engine" {
         resetAllCues(): void;
         restore(source: any, config: any): void;
         seekToLiveEdge(): void;
-        selectAudioTrack(audioTrack: any): void;
-        selectTextTrack(textTrack: TextTrack): void;
-        selectVideoTrack(videoTrack: any): void;
+        selectAudioTrack(): void;
+        selectTextTrack(): void;
+        selectVideoTrack(): void;
         get src(): string;
         get id(): string;
         get playbackRates(): number[];
@@ -84,7 +85,7 @@ declare module "doc-player-engine" {
         get currentTime(): number;
         set currentTime(to: number);
         get buffered(): TimeRanges;
-        getThumbnail(time: number): null;
+        getThumbnail(): null;
         getDrmInfo(): null;
         reset(): void;
         destroy(): void;
@@ -114,7 +115,7 @@ declare module "types/doc-player-config" {
 declare module "doc-player" {
     import { core } from '@playkit-js/kaltura-player-js';
     import { DocumentPlayerConfig } from "types/doc-player-config";
-    export const pluginName: string;
+    export const pluginName = "playkit-js-document-player";
     export class PlaykitJsDocumentPlugin extends core.BasePlugin {
         private player;
         private config;

@@ -1,6 +1,3 @@
-// TODO use updated player types
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-ignore
 import { FakeEvent, FakeEventTarget, EventType } from '@playkit-js/playkit-js';
 
 export class Timer extends FakeEventTarget {
@@ -22,7 +19,6 @@ export class Timer extends FakeEventTarget {
     this.handleRestart();
     this.intervalID = setInterval(() => {
       this._currentTime += this.TIME_UPDATE_RATE / 1000;
-      // @ts-ignore
       this.dispatchEvent(new FakeEvent(EventType.TIME_UPDATE));
       if (this.isTimeUp()) this.onTimeIsUp();
     }, this.TIME_UPDATE_RATE / this.playbackRate);
@@ -60,7 +56,6 @@ export class Timer extends FakeEventTarget {
 
   private onTimeIsUp(): void {
     this.end();
-    // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.ENDED));
   }
 

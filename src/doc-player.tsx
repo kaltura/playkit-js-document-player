@@ -6,7 +6,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 
 import { h } from 'preact';
-// @ts-ignore
 import { registerEngine } from '@playkit-js/playkit-js';
 import { core } from '@playkit-js/kaltura-player-js';
 import { DocumentPlayerEngine } from './doc-player-engine';
@@ -32,8 +31,6 @@ export class PlaykitJsDocumentPlugin extends core.BasePlugin {
       const playerState = this.player.ui.store.getState();
       return Math.round(playerState?.shell?.guiClientRect?.width);
     };
-    DocumentPlayerEngine.player = this.player;
-
     registerEngine(DocumentPlayerEngine.id, DocumentPlayerEngine);
   }
 

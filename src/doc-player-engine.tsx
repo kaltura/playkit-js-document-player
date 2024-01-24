@@ -1,15 +1,14 @@
 // TODO use updated player types
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-function */
 
-// @ts-ignore
 import { IEngine, FakeEventTarget, FakeEvent, EventManager, EventType, getLogger, Utils } from '@playkit-js/playkit-js';
 import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
 import { Timer } from './timer';
 
 const PLAYBACK_RATES = [0.5, 1, 1.5, 2];
+const FULL_SCREEN_EVENTS: Array<string> = ['fullscreenchange', 'mozfullscreenchange', 'webkitfullscreenchange'];
 
 export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
   public static _logger: any = getLogger('Document');
@@ -88,20 +87,19 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
         DocumentPlayerEngine._logger.error(`The document thumbnail failed to load, url:${this.source.url}`, error);
         reject(error);
       };
-      // @ts-ignore
       this.dispatchEvent(new FakeEvent(EventType.LOAD_START));
       this.el.src = this.source.thumbnailUrl;
     });
   }
 
   private addListeners(): void {
-    // @ts-ignore
     this.eventManager.listen(this.timer, EventType.ENDED, (event: FakeEvent) => this.dispatchEvent(event));
-    // @ts-ignore
     this.eventManager.listen(this.timer, EventType.TIME_UPDATE, (event: FakeEvent) => this.dispatchEvent(event));
-    this.eventManager.listen(DocumentPlayerEngine.player, 'fullscreenchange', () => {
-      this.reloadHigherQualityOnFullscreen();
-    });
+    FULL_SCREEN_EVENTS.forEach((fullScreenEvent) =>
+      this.eventManager.listen(document, fullScreenEvent, () => {
+        this.reloadHigherQualityOnFullscreen();
+      })
+    );
   }
 
   private reloadHigherQualityOnFullscreen(): void {
@@ -122,24 +120,18 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
     if (this.isTimedDoc()) {
       this.timer.start(this.duration);
     }
-    // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PLAYBACK_START));
-
-    // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PLAY));
 
     if (this.isFirstPlay) {
-      // @ts-ignore
       this.dispatchEvent(new FakeEvent(EventType.FIRST_PLAY));
       this.isFirstPlay = false;
     }
-    // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.DURATION_CHANGE));
-
-    // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PLAYING));
-    // @ts-ignore
-    if (this.isFirstPlay) this.dispatchEvent(new FakeEvent(EventType.FIRST_PLAYING));
+    if (this.isFirstPlay) {
+      this.dispatchEvent(new FakeEvent(EventType.FIRST_PLAYING));
+    }
     return Promise.resolve();
   }
 
@@ -148,9 +140,7 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
   }
 
   private onImageLoaded(): void {
-    // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.LOADED_METADATA));
-    // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.LOADED_DATA));
   }
 
@@ -159,6 +149,7 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
   }
 
   public static createEngine(source: any, config: any): IEngine {
+    // @ts-ignore
     return new this(source, config);
   }
 
@@ -178,6 +169,8 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
     };
     return Promise.resolve(capabilities);
   }
+
+  public static setCapabilities(): void {}
 
   public static prepareVideoElement(): void {
     DocumentPlayerEngine._logger.debug('Prepare the Image element for document preview');
@@ -199,6 +192,7 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
     return 0;
   }
 
+  // @ts-ignore
   public getVideoElement(): HTMLImageElement {
     return this.el;
   }
@@ -219,7 +213,6 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
 
   public pause(): void {
     this.timer.end();
-    // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PAUSE));
   }
 
@@ -253,7 +246,6 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
   public set playbackRate(playbackRate: number) {
     this._playbackRate = playbackRate;
     this.timer.setSpeed(playbackRate);
-    // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.RATE_CHANGE));
   }
 
@@ -271,7 +263,6 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
 
   public set currentTime(to: number) {
     this.timer.seek(to);
-    // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.SEEKED));
   }
 
