@@ -33,7 +33,7 @@
     "test": "echo 'Tests placeholder'",
     "types:check": "tsc src/index.ts --jsx react --jsxFactory h --noEmit --skipLibCheck --target ESNext --moduleResolution node --experimentalDecorators --jsxFragmentFactory Fragment",
     "types:genarate": "tsc src/index.ts --skipLibCheck --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --jsxFragmentFactory Fragment --stripInternal true --target ESNext --moduleResolution node --experimentalDecorators",
-    "lint": "eslint . --color",
+    "lint:check": "eslint . --color",
     "lint:fix": "npm run lint:check -- --fix",
     "prettier:fix": "prettier --write .",
     "release": "standard-version",
