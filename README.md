@@ -109,3 +109,4 @@ playkit-js-document-player is supported on:
 ## License
 
 playkit-js-document-player is released under [Apache 2.0 License](LICENSE)
+
