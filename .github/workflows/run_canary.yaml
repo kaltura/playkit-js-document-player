@@ -15,3 +15,4 @@ jobs:
     with:
       schema-type: "playerV3Versions"
       tests-yarn-run-to-execute: 'build lint:check types:check test'
+      node-version: "18.x"

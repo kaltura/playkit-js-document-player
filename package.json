@@ -32,14 +32,14 @@
     "build": "webpack --mode production",
     "test": "echo 'Tests placeholder'",
     "types:check": "tsc src/index.ts --jsx react --jsxFactory h --noEmit --skipLibCheck --target ESNext --moduleResolution node --experimentalDecorators --jsxFragmentFactory Fragment",
-    "types:genarate": "tsc src/index.ts --skipLibCheck --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --jsxFragmentFactory Fragment --stripInternal true --target ESNext --moduleResolution node --experimentalDecorators",
+    "types:generate": "tsc src/index.ts --skipLibCheck --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --jsxFragmentFactory Fragment --stripInternal true --target ESNext --moduleResolution node --experimentalDecorators",
     "lint:check": "eslint . --color",
     "lint:fix": "npm run lint:check -- --fix",
     "prettier:fix": "prettier --write .",
     "release": "standard-version",
     "pushTaggedRelease": "git push --follow-tags --no-verify origin master",
     "commit:dist": "git add --force --all dist && (git commit -m 'chore: update dist' || exit 0)",
-    "pre:commit": "npm run types:check && npm run lint && npm run types:genarate"
+    "pre:commit": "npm run types:check && npm run lint && npm run types:generate"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
