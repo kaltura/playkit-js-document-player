@@ -1,6 +1,6 @@
 # PlayKit JS Doc Player - Doc Player plugin for the [PlayKit JS Player]
 
-[![Build Status](https://github.com/kaltura/playkit-js-document-player/actions/workflows/run_canary_full_flow.yaml/badge.svg)](https://github.com/kaltura/playkit-js-document-player/actions/workflows/run_canary_full_flow.yaml)
+[![Build Status](https://github.com/kaltura/playkit-js-document-player/actions/workflows/run_canary.yaml/badge.svg)](https://github.com/kaltura/playkit-js-document-player/actions/workflows/run_canary.yaml)
 [![](https://img.shields.io/npm/v/@playkit-js/document-player/latest.svg)](https://www.npmjs.com/package/@playkit-js/document-player)
 [![](https://img.shields.io/npm/v/@playkit-js/document-player/canary.svg)](https://www.npmjs.com/package/@playkit-js/document-player/v/canary)
 
