@@ -46,10 +46,10 @@ git clone https://github.com/kaltura/playkit-js-document-player.git
 cd playkit-js-document-player
 
 # Run dev-server for demo page (recompiles on file-watch, and write to actual dist fs artifacts)
-npm run dev
+npm run serve
 
 # Before submitting a PR - Run the pre commit command
-npm run pre:commit
+npm run precommit
 
 # this command will run:
 
@@ -68,7 +68,7 @@ Before submitting a PR, please see our [contribution guidelines](CONTRIBUTING.md
 Run linter:
 
 ```
-npm run lint:check
+npm run lint
 ```
 
 Run linter with auto-fix mode:
@@ -82,7 +82,7 @@ npm run lint:fix
 Run prettier to format code
 
 ```
-npm run prettier:fix
+npm run prettier
 ```
 
 ### Type Check
@@ -90,8 +90,83 @@ npm run prettier:fix
 Run type-check to verify TypeScript types
 
 ```
-npm run types:check
+npm run type-check
 ```
+
+### Building
+
+Then, build the plugin
+
+```javascript
+yarn run build
+```
+
+### Testing
+
+The plugin uses `cypress` tool for e2e tests
+
+```javascript
+yarn run test
+```
+
+UI conf file (`cypress/public/ui-conf.js`) contains Kaltura player and plugin dependencies.
+Keep Kaltura player and dependency versinos aligned to currently released versions.
+
+### Embed the library in your test page
+
+Finally, add the bundle as a script tag in your page, and initialize the player
+
+```html
+<script type="text/javascript" src="/PATH/TO/FILE/kaltura-player.js"></script>
+<!--Kaltura player-->
+<script type="text/javascript" src="/PATH/TO/FILE/playkit-document-player.js"></script>
+<!--PlayKit doc-player plugin-->
+<div id="player-placeholder" style="height:360px; width:640px">
+  <script type="text/javascript">
+    var playerContainer = document.querySelector("#player-placeholder");
+    var config = {
+     ...
+     targetId: 'player-placeholder',
+     plugins: {
+      'playkit-js-document-player': { ... }
+     }
+     ...
+    };
+    var player = KalturaPlayer.setup(config);
+    player.loadMedia(...);
+  </script>
+</div>
+```
+
+#### Configuration Structure
+
+```js
+//Default configuration
+"playkit-js-document-player" = {};
+//Plugin params
+"playkit-js-document-player" = {
+  basePreviewUrl?: string, // optional
+  downloadDisabled?: boolean // optional
+}
+```
+##
+
+> ### config.basePreviewUrl
+>
+> ##### Type: `string`
+>
+> ##### Default: `""`;
+>
+
+##
+
+> ### config.downloadDisabled
+>
+> ##### Type: `boolean`
+>
+> ##### Default: `false`
+>
+
 
 ## Compatibility
 
