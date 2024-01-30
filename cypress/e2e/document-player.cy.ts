@@ -53,7 +53,7 @@ describe('Document player', () => {
     it('should load document entry with download', () => {
       mockKalturaBe();
       loadEntry({ downloadDisabled: false }).then(() => {
-        cy.intercept('GET', 'https://mock-download-document/1').as("downloadUrl");
+        cy.intercept('GET', 'https://mock-download-document/1', { statusCode: 200}).as("downloadUrl");
         cy.get('[data-testid="doc-player-button"]').should('exist');
         cy.get('[data-testid="doc-player-button"]').should('have.text', "Download document");
         cy.get('[data-testid="doc-player-button"]').click({ force: true });
