@@ -48,10 +48,10 @@ export const DocumentOverlay = withText(translates)((props: DocumentOverlayProps
   const content = getContent();
   return (
     <OverlayPortal>
-      <div className={styles.docOverlay}>
+      <div className={styles.docOverlay} data-testid="doc-player-overlay">
         <div className={styles.docTextWrapper}>{content.text}</div>
         {content.buttonText && (
-          <Button onClick={content.onClick} type={ButtonType.primary} size={ButtonSize.medium}>
+          <Button onClick={content.onClick} type={ButtonType.primary} size={ButtonSize.medium} testId="doc-player-button">
             {content.buttonText}
           </Button>
         )}

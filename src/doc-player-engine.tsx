@@ -84,7 +84,7 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
         this.onImageLoaded();
       };
       this.el.onerror = (error): void => {
-        DocumentPlayerEngine._logger.error(`The document thumbnail failed to load, url:${this.source.url}`, error);
+        DocumentPlayerEngine._logger.error(`The document thumbnail failed to load, url:${this.source.thumbnailUrl}`, error);
         reject(error);
       };
       this.dispatchEvent(new FakeEvent(EventType.LOAD_START));
@@ -230,6 +230,10 @@ export class DocumentPlayerEngine extends FakeEventTarget implements IEngine {
   public selectTextTrack(): void {}
 
   public selectVideoTrack(): void {}
+
+  public get paused(): boolean {
+    return !this.timer.isActive();
+  }
 
   public get src(): string {
     return this.isLoadingStart && this.source ? this.source.url : '';

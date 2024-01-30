@@ -29,6 +29,10 @@ export class Timer extends FakeEventTarget {
     this.intervalID = null;
   }
 
+  public isActive(): boolean {
+    return !!this.intervalID;
+  }
+
   private handleRestart(): void {
     if (this.isTimeUp()) this.reset();
   }
