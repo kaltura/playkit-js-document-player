@@ -11,10 +11,14 @@ const plugins = [
 
 module.exports = (env, { mode }) => {
   return {
-    target: 'web',
-    entry: './src/index.ts',
-    optimization: {
-      minimize: mode !== 'development'
+    context: `${__dirname}/src`,
+    entry: {
+      'playkit-call-to-action': 'index.ts'
+    },
+    output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: '[name].js',
+      library: ['KalturaPlayer', 'plugins']
     },
     devtool: 'source-map',
     module: {
@@ -22,19 +26,20 @@ module.exports = (env, { mode }) => {
         {
           test: /\.tsx?$/,
           loader: 'ts-loader',
-          options: { configFile: mode === 'development' ? 'tsconfig.dev.json' : 'tsconfig.json' },
+          options: {
+            configFile: 'tsconfig.json'
+          },
           exclude: /node_modules/
         },
         {
-          test: /\.scss/,
+          test: /\.scss$/,
           use: [
             'style-loader',
             {
               loader: 'css-loader',
               options: {
-                esModule: true,
                 modules: {
-                  localIdentName: '[local]',
+                  localIdentName: '[name]__[local]___[hash:base64:5]',
                   namedExport: true
                 }
               }
@@ -42,34 +47,25 @@ module.exports = (env, { mode }) => {
             {
               loader: 'sass-loader',
               options: {
-                sourceMap: mode === 'development'
+                sourceMap: true
               }
             }
           ]
         }
       ]
     },
-    resolve: {
-      extensions: ['.tsx', '.ts', '.js']
+    devServer: {
+      static: `${__dirname}/src`
     },
-    output: {
-      filename: 'playkit-document-player.js',
-      path: path.resolve(__dirname, 'dist'),
-      clean: true
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js'],
+      modules: [path.resolve(__dirname, 'src'), 'node_modules']
     },
     plugins: plugins,
     externals: {
-      '@playkit-js/playkit-js': ['KalturaPlayer', 'core'],
-      '@playkit-js/kaltura-player-js': ['KalturaPlayer'],
-      preact: 'root KalturaPlayer.ui.preact'
-    },
-    devServer: {
-      static: {
-        directory: path.join(__dirname, 'src')
-      },
-      client: {
-        progress: true
-      }
+      preact: 'root KalturaPlayer.ui.preact',
+      'preact/hooks': 'root KalturaPlayer.ui.preactHooks',
+      '@playkit-js/kaltura-player-js': 'root KalturaPlayer'
     }
   };
 };
