@@ -1,22 +1,35 @@
 {
   "compilerOptions": {
-    "allowJs": false,
-    "baseUrl": "..",
-    "experimentalDecorators": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact",
-    "module": "commonjs",
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "customMatcher": "\\.(css|scss)$"
+        }
+      }
+    ],
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "Node",
-    "preserveSymlinks": true,
-    "skipLibCheck": true,
+    "baseUrl": ".",
     "sourceMap": true,
-    "strict": true,
-    "target": "ES5",
-    "types": ["node"],
+    "strict": false,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
     "paths": {
-      "*": ["./src/*", "./node_modules/*"]
+      "react": ["./node_modules/preact/compat/"],
+      "react-dom": ["./node_modules/preact/compat/"]
     },
-    "lib": ["es2015", "dom"]
+    "lib": ["dom", "ESNext"],
+    "outDir": "./lib/",
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*.tsx", "src/**/*.ts", "node_modules/@playkit-js/kaltura-player-js/types.d.ts"]
+  "include": ["src/**/*"]
 }

@@ -2,44 +2,46 @@ const webpack = require('webpack');
 const path = require('path');
 const packageData = require('./package.json');
 
-const plugins = [
-  new webpack.DefinePlugin({
-    __VERSION__: JSON.stringify(packageData.version),
-    __NAME__: JSON.stringify(packageData.name)
-  })
-];
-
 module.exports = (env, { mode }) => {
   return {
-    context: `${__dirname}/src`,
-    entry: {
-      'playkit-call-to-action': 'index.ts'
-    },
-    output: {
-      path: path.resolve(__dirname, 'dist'),
-      filename: '[name].js',
-      library: ['KalturaPlayer', 'plugins']
-    },
+    target: 'web',
+    entry: './src/index.ts',
     devtool: 'source-map',
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
-          loader: 'ts-loader',
-          options: {
-            configFile: 'tsconfig.json'
-          },
-          exclude: /node_modules/
+          test: /\.(tsx?|js)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    bugfixes: true
+                  }
+                ],
+                ['@babel/preset-typescript', { jsxPragma: 'h', jsxPragmaFrag: 'Fragment' }]
+              ],
+              plugins: [
+                ['@babel/plugin-transform-runtime'],
+                ['@babel/plugin-proposal-decorators', { legacy: true }],
+                ['@babel/plugin-transform-react-jsx', { pragma: 'h', pragmaFrag: 'Fragment' }]
+              ]
+            }
+          }
         },
         {
-          test: /\.scss$/,
+          test: /\.scss/,
           use: [
             'style-loader',
             {
               loader: 'css-loader',
               options: {
+                esModule: true,
                 modules: {
-                  localIdentName: '[name]__[local]___[hash:base64:5]',
+                  localIdentName: '[local]',
                   namedExport: true
                 }
               }
@@ -47,25 +49,46 @@ module.exports = (env, { mode }) => {
             {
               loader: 'sass-loader',
               options: {
-                sourceMap: true
+                // sourceMap: mode === 'development'
               }
             }
           ]
         }
       ]
     },
-    devServer: {
-      static: `${__dirname}/src`
-    },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js'],
-      modules: [path.resolve(__dirname, 'src'), 'node_modules']
+      extensions: ['.tsx', '.ts', '.js']
     },
-    plugins: plugins,
+    output: {
+      filename: 'playkit-plugin-example.js',
+      path: path.resolve(__dirname, 'dist'),
+      library: {
+        umdNamedDefine: true,
+        name: ['KalturaPlayer', 'plugins', 'plugin-example'],
+        type: 'umd'
+      },
+      clean: true
+    },
     externals: {
+      '@playkit-js/kaltura-player-js': 'root KalturaPlayer',
+      '@playkit-js/playkit-js-ui': 'root KalturaPlayer.ui',
+      '@playkit-js/playkit-js': 'root KalturaPlayer.core',
       preact: 'root KalturaPlayer.ui.preact',
-      'preact/hooks': 'root KalturaPlayer.ui.preactHooks',
-      '@playkit-js/kaltura-player-js': 'root KalturaPlayer'
-    }
+      'preact-i18n': 'root KalturaPlayer.ui.preacti18n'
+    },
+    devServer: {
+      static: {
+        directory: path.join(__dirname, 'demo')
+      },
+      client: {
+        progress: true
+      }
+    },
+    plugins: [
+      new webpack.DefinePlugin({
+        __VERSION__: JSON.stringify(packageData.version),
+        __NAME__: JSON.stringify(packageData.name)
+      })
+    ]
   };
 };
