@@ -1,0 +1,36 @@
+[
+    {
+      "partnerId": 1091,
+      "ks": "",
+      "userId": 0,
+      "objectType": "KalturaStartWidgetSessionResponse"
+    },
+    {
+        "id": "1_2q9jefqa",
+        "name": "test playlist ",
+        "description": "",
+        "thumbnailUrl": "https://mock-thumb/p/1091/sp/109100/thumbnail/entry_id/0_wifqaipd/version/100042",
+        "objectType": "KalturaPlaylist"
+    },
+    [
+        {
+            "id": "0_wifqaipd",
+            "name": "Accessibility Deck - latest presentation",
+            "description": "This is a presentation about our accessibility deck. feel free to download and share it internally!",
+            "creatorId": "Cypress.user",
+            "tags": "accessibility, ppt",
+            "status": 2,
+            "type": 10,
+            "createdAt": 1697730813,
+            "updatedAt": 1697730920,
+            "downloadUrl": "https://mock-download-document/1",
+            "thumbnailUrl": "https://mock-thumb/p/1091/sp/109100/thumbnail/entry_id/0_wifqaipd/version/100042",
+            "objectType": "KalturaDocumentEntry"
+        }
+    ],
+    {
+        "objects": [],
+        "totalCount": 0,
+        "objectType": "KalturaUserEntryListResponse"
+    }
+  ]
