@@ -60,11 +60,11 @@ module.exports = (env, { mode }) => {
       extensions: ['.tsx', '.ts', '.js']
     },
     output: {
-      filename: 'playkit-plugin-example.js',
+      filename: 'playkit-document-player.js',
       path: path.resolve(__dirname, 'dist'),
       library: {
         umdNamedDefine: true,
-        name: ['KalturaPlayer', 'plugins', 'plugin-example'],
+        name: ['KalturaPlayer', 'plugins', 'playkit-document-player'],
         type: 'umd'
       },
       clean: true
@@ -77,12 +77,7 @@ module.exports = (env, { mode }) => {
       'preact-i18n': 'root KalturaPlayer.ui.preacti18n'
     },
     devServer: {
-      static: {
-        directory: path.join(__dirname, 'demo')
-      },
-      client: {
-        progress: true
-      }
+      static: `${__dirname}/src`
     },
     plugins: [
       new webpack.DefinePlugin({

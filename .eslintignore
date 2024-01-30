@@ -1,6 +1,5 @@
 dist/
 types/
-demo/
 webpack.config.js
 tsconfig.json
 tsconfig-lib.json
