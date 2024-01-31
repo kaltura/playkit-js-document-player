@@ -1,11 +1,11 @@
 {
   "en": {
     "docPlayer": {
-      "previewText": "Click to view Supply & Demand",
+      "previewText": "Click to view",
       "previewButtonText": "View document",
-      "downloadText": "Supply & Demand is unavailable, download to view.",
+      "downloadText": "is unavailable, download to view.",
       "downloadButtonText": "Download document",
-      "contentUnavailableText": "Supply & Demand is unavailable to view."
+      "contentUnavailableText": "is unavailable to view."
     }
   }
 }
