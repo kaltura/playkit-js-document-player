@@ -1281,10 +1281,10 @@
   resolved "https://registry.yarnpkg.com/@playkit-js/browserslist-config/-/browserslist-config-1.0.8-canary.0-f5791c1.tgz#1bfea3cc970b6bc4b6d1696209f2bde72aeb3518"
   integrity sha512-k3MsLvGuuf1Kben5GwkPx5weXEgYCgRPnt6ApMJ3y80paY/obU3DC+lmfeert/I2IEzQBlPWMVvtZKQH8KG9/w==
 
-"@playkit-js/common@^1.5.3":
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/@playkit-js/common/-/common-1.5.3.tgz#1494e6d61787cd1adfdc43648784a01e4a0c0789"
-  integrity sha512-wW2Ud6hDsfJuhnmRzn+nBFqD1g5TRDy7RIClPo2uh8D/XV4YEVYcUvdSJMCYLFEDjqeq71KtdOp64Lo0DklPBw==
+"@playkit-js/common@^1.5.4":
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/@playkit-js/common/-/common-1.5.4.tgz#c77e5377cf0d2f1ee1988a850811211c010aa488"
+  integrity sha512-DreuxptNJXLZo+15DJ6aDqIAhlJg35/6N0UBu5yanxqrsKOTSml21IFnZ/Ejc5lK5SpE7tIdcvOiTrp0MwQFyg==
   dependencies:
     "@playkit-js/playkit-js-ui" "^0.77.10"
     classnames "^2.3.2"
