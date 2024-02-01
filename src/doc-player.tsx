@@ -84,6 +84,7 @@ export class PlaykitJsDocumentPlugin extends core.BasePlugin {
   reset(): void {
     if (this.docOverlayDisposer) {
       this.docOverlayDisposer();
+      this.docOverlayDisposer = null;
     }
   }
 
