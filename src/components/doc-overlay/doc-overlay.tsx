@@ -8,11 +8,11 @@ import * as styles from './doc-overlay.scss';
 const { withText, Text } = ui.preacti18n;
 
 const translates = {
-  previewText: <Text id="docPlayer.previewText">Click to view Supply & Demand</Text>,
+  previewText: <Text id="docPlayer.previewText">Click to view</Text>,
   previewButtonText: <Text id="docPlayer.previewButtonText">View document</Text>,
-  downloadText: <Text id="docPlayer.downloadText">Supply & Demand is unavailable, download to view.</Text>,
+  downloadText: <Text id="docPlayer.downloadText">is unavailable, download to view.</Text>,
   downloadButtonText: <Text id="docPlayer.downloadButtonText">Download document</Text>,
-  contentUnavailableText: <Text id="docPlayer.contentUnavailableText">Supply & Demand is unavailable to view.</Text>
+  contentUnavailableText: <Text id="docPlayer.contentUnavailableText">is unavailable to view.</Text>
 };
 
 export interface DocumentOverlayProps {
@@ -23,25 +23,26 @@ export interface DocumentOverlayProps {
   downloadText?: string;
   downloadButtonText?: string;
   contentUnavailableText?: string;
+  sourceName?: string;
 }
 
 export const DocumentOverlay = withText(translates)((props: DocumentOverlayProps) => {
   const getContent = (): { text: string; buttonText?: string; onClick?: () => void } => {
     if (props.onPreview) {
       return {
-        text: props.previewText!,
+        text: `${props.previewText!} ${props.sourceName}`,
         buttonText: props.previewButtonText!,
         onClick: props.onPreview
       };
     } else if (props.onDownload) {
       return {
-        text: props.downloadText!,
+        text: `${props.sourceName} ${props.downloadText!}`,
         buttonText: props.downloadButtonText!,
         onClick: props.onDownload
       };
     }
     return {
-      text: props.contentUnavailableText!
+      text: `${props.sourceName} ${props.contentUnavailableText!}`
     };
   };
 
@@ -49,7 +50,9 @@ export const DocumentOverlay = withText(translates)((props: DocumentOverlayProps
   return (
     <OverlayPortal>
       <div className={styles.docOverlay} data-testid="doc-player-overlay">
-        <div className={styles.docTextWrapper}>{content.text}</div>
+        <div className={styles.docTextWrapper} data-testid="doc-player-text-wrapper">
+          {content.text}
+        </div>
         {content.buttonText && (
           <Button onClick={content.onClick} type={ButtonType.primary} size={ButtonSize.medium} testId="doc-player-button">
             {content.buttonText}

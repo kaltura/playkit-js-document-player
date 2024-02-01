@@ -25,7 +25,11 @@ export class PlaykitJsDocumentPlugin extends core.BasePlugin {
 
   private docOverlayDisposer: (() => void) | null = null;
 
-  constructor(name: string, private player: any, private config: DocumentPlayerConfig) {
+  constructor(
+    name: string,
+    private player: any,
+    private config: DocumentPlayerConfig
+  ) {
     super(name, player, config);
     DocumentPlayerEngine.getPlayerWidth = (): number => {
       const playerState = this.player.ui.store.getState();
@@ -45,7 +49,9 @@ export class PlaykitJsDocumentPlugin extends core.BasePlugin {
   }
 
   private addUI(): void {
-    const docOverlayProps: DocumentOverlayProps = {};
+    const docOverlayProps: DocumentOverlayProps = {
+      sourceName: this.player.sources.metadata?.name
+    };
     if (this.config?.basePreviewUrl) {
       docOverlayProps.onPreview = (): void => this.onPreview(`${this.config?.basePreviewUrl}${this.player.sources.id}`);
     } else if (!this.config?.downloadDisabled) {
