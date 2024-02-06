@@ -164,7 +164,7 @@ Finally, add the bundle as a script tag in your page, and initialize the player
 >
 > ##### Type: `boolean`
 >
-> ##### Default: `false`
+> ##### Default: `true`
 >
 
 

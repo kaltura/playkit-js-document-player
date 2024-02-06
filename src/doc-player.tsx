@@ -20,7 +20,7 @@ export const pluginName = 'playkit-js-document-player';
 export class PlaykitJsDocumentPlugin extends core.BasePlugin {
   static defaultConfig: DocumentPlayerConfig = {
     basePreviewUrl: '',
-    downloadDisabled: false
+    downloadDisabled: true
   };
 
   private docOverlayDisposer: (() => void) | null = null;
