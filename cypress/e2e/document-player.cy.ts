@@ -22,7 +22,7 @@ describe('Document player', () => {
     });
     it('should load document entry in playlist', () => {
       mockKalturaBe();
-      loadPlaylist().then((kalturaPlayer) => {
+      loadPlaylist({}, { autoplay: false }).then((kalturaPlayer) => {
         cy.get('[data-testid="doc-player-overlay"]').should('exist');
         cy.wait('@mockThumb');
         cy.get('.playkit-seek-bar').should('exist');
@@ -30,6 +30,7 @@ describe('Document player', () => {
         cy.get('.playkit-control-fullscreen').should('exist');
         cy.get('.playkit-control-play-pause')
           .should('exist')
+          .wait(1000)
           .then(() => {
             expect(kalturaPlayer.paused).to.equal(false);
           });
