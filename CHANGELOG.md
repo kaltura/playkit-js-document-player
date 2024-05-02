@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.0.5 (2024-05-02)
+
+
+### Bug Fixes
+
+* **FEC-13885:** KMS v5.125.9| Webcast| "add/Cancel" presenters buttons appears one above each other instead of next to each other ([3a6cc3a](https://github.com/kaltura/playkit-js-document-player/commit/3a6cc3a5e451ec1228b8e4349527f57fdcd84cd7))
+
 ### 0.0.4 (2024-03-14)
 
 ### 0.0.3 (2024-02-12)

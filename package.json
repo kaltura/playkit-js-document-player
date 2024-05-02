@@ -1,6 +1,6 @@
 {
   "name": "@playkit-js/document-player",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Engine for Kaltura Player that supports document type sources",
   "main": "dist/playkit-document-player.js",
   "types": "types/index.d.ts",
