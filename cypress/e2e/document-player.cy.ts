@@ -59,7 +59,7 @@ describe('Document player', () => {
         cy.intercept('GET', 'https://mock-download-document/1', { statusCode: 200 }).as('downloadUrl');
         cy.get('[data-testid="doc-player-text-wrapper"]').should(
           'have.text',
-          'Accessibility Deck - latest presentation is unavailable, download to view.'
+          'Click to download Accessibility Deck - latest presentation'
         );
         cy.get('[data-testid="doc-player-button"]').should('exist');
         cy.get('[data-testid="doc-player-button"]').should('have.text', 'Download document');
