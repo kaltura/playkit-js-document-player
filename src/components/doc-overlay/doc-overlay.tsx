@@ -10,7 +10,7 @@ const { withText, Text } = ui.preacti18n;
 const translates = {
   previewText: <Text id="docPlayer.previewText">Click to view</Text>,
   previewButtonText: <Text id="docPlayer.previewButtonText">View document</Text>,
-  downloadText: <Text id="docPlayer.downloadText">is unavailable, download to view.</Text>,
+  downloadText: <Text id="docPlayer.downloadText">Click to download</Text>,
   downloadButtonText: <Text id="docPlayer.downloadButtonText">Download document</Text>,
   contentUnavailableText: <Text id="docPlayer.contentUnavailableText">is unavailable to view.</Text>
 };
@@ -36,7 +36,7 @@ export const DocumentOverlay = withText(translates)((props: DocumentOverlayProps
       };
     } else if (props.onDownload) {
       return {
-        text: `${props.sourceName} ${props.downloadText!}`,
+        text: `${props.downloadText!} ${props.sourceName}`,
         buttonText: props.downloadButtonText!,
         onClick: props.onDownload
       };
