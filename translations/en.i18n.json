@@ -3,7 +3,7 @@
     "docPlayer": {
       "previewText": "Click to view",
       "previewButtonText": "View document",
-      "downloadText": "is unavailable, download to view.",
+      "downloadText": "Click to download",
       "downloadButtonText": "Download document",
       "contentUnavailableText": "is unavailable to view."
     }
