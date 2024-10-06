@@ -88,6 +88,8 @@ export class PlaykitJsDocumentPlugin extends core.BasePlugin {
   };
 
   reset(): void {
+    this.player.ui.store?.dispatch(ui.reducers.shell.actions.removePlayerClass(HAS_DOCUMENT_PLAYER_CLASS));
+
     if (this.docOverlayDisposer) {
       this.docOverlayDisposer();
       this.docOverlayDisposer = null;
