@@ -24,7 +24,7 @@
     "player"
   ],
   "scripts": {
-    "serve": "webpack serve --open --mode development",
+    "dev": "webpack serve --open --mode development",
     "watch": "webpack --mode development --watch",
     "build:prod": "webpack --mode production",
     "build": "yarn run build:prod && yarn run build:types",
@@ -97,6 +97,6 @@
     "extends @playkit-js/browserslist-config"
   ],
   "dependencies": {
-    "@playkit-js/common": "^1.5.4"
+    "@playkit-js/common": "1.5.19"
   }
 }
