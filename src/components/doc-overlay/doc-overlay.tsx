@@ -5,6 +5,7 @@ import { OverlayPortal } from '@playkit-js/common/dist/hoc/overlay-portal';
 import { Button, ButtonSize, ButtonType } from '@playkit-js/common/dist/components/button';
 import * as styles from './doc-overlay.scss';
 
+const { Overlay } = ui.components;
 const { withText, Text } = ui.preacti18n;
 
 const translates = {
@@ -49,16 +50,18 @@ export const DocumentOverlay = withText(translates)((props: DocumentOverlayProps
   const content = getContent();
   return (
     <OverlayPortal>
-      <div className={styles.docOverlay} data-testid="doc-player-overlay">
-        <div className={styles.docTextWrapper} data-testid="doc-player-text-wrapper">
-          {content.text}
+      <Overlay open permanent>
+        <div className={styles.docOverlay} data-testid="doc-player-overlay">
+          <div className={styles.docTextWrapper} data-testid="doc-player-text-wrapper">
+            {content.text}
+          </div>
+          {content.buttonText && (
+            <Button onClick={content.onClick} type={ButtonType.primary} size={ButtonSize.medium} testId="doc-player-button">
+              {content.buttonText}
+            </Button>
+          )}
         </div>
-        {content.buttonText && (
-          <Button onClick={content.onClick} type={ButtonType.primary} size={ButtonSize.medium} testId="doc-player-button">
-            {content.buttonText}
-          </Button>
-        )}
-      </div>
+      </Overlay>
     </OverlayPortal>
   );
 });

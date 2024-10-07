@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Document Player Example</title>
+    <script src="https://unpkg.com/@playkit-js/kaltura-player-js@canary/dist/kaltura-ovp-player.js"></script>
+    <script type="text/javascript" src="../playkit-document-player.js"></script>
+  </head>
+
+  <body>
+    <div id="player-placeholder" style="height: 360px; width: 640px">
+      <script type="text/javascript">
+        var playerContainer = document.querySelector('#player-placeholder');
+        var config = {
+          targetId: 'player-placeholder',
+          provider: {
+            partnerId: 242,
+            env: {
+              serviceUrl: 'https://api.nvq2.ovp.kaltura.com/api_v3',
+              cdnUrl: 'https://api.nvq2.ovp.kaltura.com',
+              statsServiceUrl: 'https://analytics.rcqa3.kaltura.com',
+              liveStatsServiceUrl: 'https://livestats.nvq2.ovp.kaltura.com',
+              analyticsServiceUrl: 'https://analytics.nvq2.ovp.kaltura.com',
+              apiFeatures: {
+                entryRedirect: '1'
+              }
+            }
+          },
+          plugins: {
+            'playkit-js-document-player': {
+              basePreviewUrl: 'https://242.nvq2.mediaspace.kaltura.com/media/'
+            }
+          }
+        };
+        var player = KalturaPlayer.setup(config);
+        player.loadMedia({
+          entryId: '0_sttbws0e'
+        });
+      </script>
+    </div>
+  </body>
+</html>
