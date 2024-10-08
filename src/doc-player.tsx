@@ -6,7 +6,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 
 import { h } from 'preact';
-import { ui } from '@playkit-js/kaltura-player-js';
 import { registerEngine } from '@playkit-js/playkit-js';
 import { core } from '@playkit-js/kaltura-player-js';
 import { DocumentPlayerEngine } from './doc-player-engine';
@@ -14,7 +13,6 @@ import { DocumentOverlay, DocumentOverlayProps } from './components/doc-overlay'
 import { DocumentPlayerConfig } from './types/doc-player-config';
 
 const PRESET_AREAS = ['Document', 'Playback'];
-const HAS_DOCUMENT_PLAYER_CLASS = 'playkit-has-document-player';
 
 export const pluginName = 'playkit-js-document-player';
 
@@ -70,8 +68,6 @@ export class PlaykitJsDocumentPlugin extends core.BasePlugin {
         return <DocumentOverlay {...docOverlayProps} />;
       }
     });
-
-    this.player.ui.store?.dispatch(ui.reducers.shell.actions.addPlayerClass(HAS_DOCUMENT_PLAYER_CLASS));
   }
 
   private onPreview = (url: string): void => {
@@ -88,8 +84,6 @@ export class PlaykitJsDocumentPlugin extends core.BasePlugin {
   };
 
   reset(): void {
-    this.player.ui.store?.dispatch(ui.reducers.shell.actions.removePlayerClass(HAS_DOCUMENT_PLAYER_CLASS));
-
     if (this.docOverlayDisposer) {
       this.docOverlayDisposer();
       this.docOverlayDisposer = null;
