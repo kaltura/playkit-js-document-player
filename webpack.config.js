@@ -77,12 +77,7 @@ module.exports = (env, { mode }) => {
       'preact-i18n': 'root KalturaPlayer.ui.preacti18n'
     },
     devServer: {
-      static: {
-        directory: path.join(__dirname, 'demo')
-      },
-      client: {
-        progress: true
-      }
+      static: `${__dirname}/src`
     },
     plugins: [
       new webpack.DefinePlugin({
