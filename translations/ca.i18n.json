@@ -1,0 +1,11 @@
+{
+  "ca": {
+    "docPlayer": {
+      "previewText": "Fes clic per veure",
+      "previewButtonText": "Veure el document",
+      "downloadText": "Fes clic per descarregar",
+      "downloadButtonText": "Descarregar document",
+      "contentUnavailableText": "no està disponible per veure."
+    }
+  }
+}
