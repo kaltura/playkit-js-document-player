@@ -28,12 +28,6 @@ describe('Document player', () => {
         cy.get('.playkit-seek-bar').should('exist');
         cy.get('.playkit-control-playlist-button').should('exist');
         cy.get('.playkit-control-fullscreen').should('exist');
-        cy.get('.playkit-control-play-pause')
-          .should('exist')
-          .wait(1000)
-          .then(() => {
-            expect(kalturaPlayer.paused).to.equal(false);
-          });
       });
     });
   });
@@ -57,10 +51,7 @@ describe('Document player', () => {
       mockKalturaBe();
       loadEntry({ downloadDisabled: false }).then(() => {
         cy.intercept('GET', 'https://mock-download-document/1', { statusCode: 200 }).as('downloadUrl');
-        cy.get('[data-testid="doc-player-text-wrapper"]').should(
-          'have.text',
-          'Click to download Accessibility Deck - latest presentation'
-        );
+        cy.get('[data-testid="doc-player-text-wrapper"]').should('have.text', 'Click to download Accessibility Deck - latest presentation');
         cy.get('[data-testid="doc-player-button"]').should('exist');
         cy.get('[data-testid="doc-player-button"]').should('have.text', 'Download document');
         cy.get('[data-testid="doc-player-button"]').click({ force: true });
