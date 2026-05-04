@@ -1,0 +1,109 @@
+{
+  "repositoryName": "playkit-js-document-player",
+  "coreResponsibility": "A Kaltura Player engine plugin that enables document-type media playback (PDFs, presentations, documents) within the Kaltura Player ecosystem, rendering document thumbnails with optional timed playback support for playlists.",
+  "domainAndLogicOwnership": {
+    "featureOwnership": [
+      "Document entry playback engine (non-video media)",
+      "Document thumbnail rendering and display",
+      "Non-durational document mode (static display without seek bar)",
+      "Durational document mode (timed playback with seek bar for playlists)",
+      "Document preview functionality via configurable preview URL",
+      "Document download functionality",
+      "Fullscreen support with dynamic thumbnail quality upgrade",
+      "Timer-based playback simulation for timed documents",
+      "Document overlay UI component (preview/download buttons)",
+      "Playback rate control for timed documents"
+    ],
+    "dataHandling": [
+      "Document source URL and thumbnail URL management",
+      "Timer state machine for simulated playback (currentTime, duration, playbackRate)",
+      "Kaltura session (ks) parameter injection for authenticated document access",
+      "Document entry metadata (name, id, thumbnailUrl, downloadUrl)",
+      "Playback events dispatching (PLAY, PAUSE, TIME_UPDATE, ENDED, SEEKED, etc.)",
+      "Plugin configuration state (basePreviewUrl, downloadDisabled)"
+    ]
+  },
+  "integrationPoints": {
+    "upstream": [
+      "Kaltura Backend API (document entry retrieval, thumbnail service)",
+      "@playkit-js/kaltura-player-js (core player framework)",
+      "@playkit-js/playkit-js (engine registration, event system, utilities)",
+      "@playkit-js/playkit-js-ui (UI components, preact integration)",
+      "@playkit-js/common (shared UI components like Button, OverlayPortal)"
+    ],
+    "downstream": [
+      "Kaltura Player V7 web player applications",
+      "Kaltura MediaSpace and KAF (Kaltura Application Framework)",
+      "Custom player integrations using Kaltura Player JS SDK",
+      "Playlist playback scenarios requiring document entries"
+    ],
+    "externalApis": [
+      "Kaltura Thumbnail API (/thumbnail/entry_id/{entryId}/width/{width})",
+      "Kaltura Document Download API",
+      "Kaltura Session API (ks parameter for authentication)"
+    ]
+  },
+  "technicalStack": {
+    "primaryLanguages": ["TypeScript", "TSX/JSX"],
+    "frameworks": [
+      "Preact (UI rendering)",
+      "Webpack (bundling)",
+      "Babel (transpilation)",
+      "Cypress (E2E testing)",
+      "SCSS (styling)"
+    ],
+    "entryPoints": [
+      {
+        "file": "src/index.ts",
+        "description": "Main entry point - registers the document player plugin with Kaltura Player"
+      },
+      {
+        "file": "src/doc-player.tsx",
+        "description": "Core plugin class (PlaykitJsDocumentPlugin) - manages plugin lifecycle, UI components, and engine registration"
+      },
+      {
+        "file": "src/doc-player-engine.tsx",
+        "description": "Document playback engine (DocumentPlayerEngine) - implements IEngine interface for document rendering and playback simulation"
+      },
+      {
+        "file": "src/timer.ts",
+        "description": "Timer utility class - handles timed document playback with seek, rate control, and time updates"
+      },
+      {
+        "file": "src/components/doc-overlay/doc-overlay.tsx",
+        "description": "Document overlay UI component - displays preview/download buttons and document name"
+      }
+    ]
+  },
+  "triageKeywords": [
+    "document player",
+    "document entry",
+    "document thumbnail",
+    "KalturaDocumentEntry",
+    "playkit-js-document-player",
+    "document preview",
+    "document download",
+    "non-durational",
+    "durational document",
+    "document playback",
+    "PDF player",
+    "presentation player",
+    "document engine",
+    "isDocument()",
+    "doc-player-overlay"
+  ],
+  "errorPatterns": [
+    "The document thumbnail failed to load",
+    "document entry not loading",
+    "document preview not working",
+    "document download button missing",
+    "document seek bar not appearing",
+    "document fullscreen quality",
+    "timed document not advancing",
+    "document in playlist not auto-playing"
+  ],
+  "configurationOptions": {
+    "basePreviewUrl": "URL prefix for document preview (opens in new tab)",
+    "downloadDisabled": "Boolean to enable/disable document download functionality (default: true)"
+  }
+}
